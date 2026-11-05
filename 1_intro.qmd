@@ -1,0 +1,28 @@
+---
+title: "1_intro"
+format: html
+editor: visual
+---
+
+## Resources
+
+- <https://perthirtysix.com/essay/nfl-heartrate-index>
+
+- <https://opensourcefootball.com/posts/2020-09-28-nflfastr-ep-wp-and-cp-models/>
+
+## Tutorial Link
+
+- <https://bradcongelio.com/nfl-analytics-with-r-book/01-nfl-analytics-and-r.html>
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
