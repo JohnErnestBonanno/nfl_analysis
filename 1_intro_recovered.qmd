@@ -46,6 +46,10 @@ library(nflplotR)
 ## Sample Questions:
 
 - Which schools/conferences have the highest contribution to the NLF? (might need to cross link with college stats)
+- Build a Radar chart for QBs on stats like:
+  - average release time
+  - yards per game / rushing attempts per game
+  - etc
 
 ## Theme
 
