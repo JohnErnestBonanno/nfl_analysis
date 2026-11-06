@@ -70,4 +70,33 @@ time_in_pocket %>%
   filter(team_name %in% c("PIT", "BAL", "CIN", "CLE")) %>%
   summarize(avg_time_to_throw_afc = mean(avg_time_to_throw))
 
+# Multiple Filters
 
+multiple_filters <- pbp %>%
+  filter(down == 2 & play_type == "pass" &
+           qb_hit == 1 &
+           complete_pass == 1 & 
+           air_yards >= ydstogo)
+
+multiple_filters
+
+total_yards <- pbp %>%
+  filter(season_type == "REG" & !is.na(down)) %>% #Remove 2 point conversions
+  summarize(yards = sum(yards_gained, na.rm = TRUE))
+
+total_yards
+
+total_yards_by_down <- pbp %>%
+  filter(season_type == "REG" & !is.na(down)) %>% 
+  group_by(down) %>%
+  summarize(yards = sum(yards_gained, na.rm = TRUE))
+
+total_yards_by_down
+
+yrd_per_down = ggplot(total_yards_by_down,
+                      aes(x=down,y=yards)) +
+  geom_col() + 
+  labs(title = "Yards Per Down: NFL 2022 Regular Season")
+  
+yrd_per_down
+  
