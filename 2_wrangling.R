@@ -304,7 +304,7 @@ qb_hits <- nflreadr::load_pbp(2022) %>%
 
 qb_hits
 
-#Exercise 4 - 
+#Exercise 4 - Diff in Completions vs. Incompletions
 
 # After running the following code, add a column titled difference using that mutate() verb that calculates the difference between each quarterback’s total_completions and total_incompletions.
 
@@ -321,3 +321,25 @@ cmp_inc <- pbp %>%
   mutate(difference = total_completions - total_incompletions)
 
 view(cmp_inc)
+
+# Exercise 5
+
+# After running the following code, use the left_join() function to merge the two data frames together into a single data frame titled rb_success_combined
+
+roster_information <- nflreadr::load_rosters(2022) %>%
+  select(full_name, gsis_id, headshot_url)
+
+rb_success <- pbp %>%
+  group_by(rusher_player_id) %>%
+  filter(!is.na(rusher) & !is.na(success)) %>%
+  summarize(total_success = sum(success, na.rm = TRUE)) %>%
+  arrange(-total_success) %>%
+  slice(1:10)
+
+view(roster_information)
+view(rb_success)
+
+rb_success_combined <- rb_success %>%
+  left_join(roster_information, by = c("rusher_player_id" = "gsis_id"))
+
+rb_success_combined
