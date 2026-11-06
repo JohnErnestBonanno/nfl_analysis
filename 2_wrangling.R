@@ -59,3 +59,15 @@ fig <- ggplot(data = time_in_pocket, aes(x = player, y = avg_time_to_throw)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 print(fig)
+
+time_in_pocket_no_afcn <- time_in_pocket %>%
+  filter(!team_name %in% c("PIT", "BAL", "CIN", "CLE"))
+
+time_in_pocket_no_afcn %>%
+  summarize(avg_time_to_throw_no_afc = mean(avg_time_to_throw))
+
+time_in_pocket %>%
+  filter(team_name %in% c("PIT", "BAL", "CIN", "CLE")) %>%
+  summarize(avg_time_to_throw_afc = mean(avg_time_to_throw))
+
+
