@@ -303,3 +303,21 @@ qb_hits <- nflreadr::load_pbp(2022) %>%
   select(defteam, total_qb_hits)
 
 qb_hits
+
+#Exercise 4 - 
+
+# After running the following code, add a column titled difference using that mutate() verb that calculates the difference between each quarterback’s total_completions and total_incompletions.
+
+cmp_inc <- pbp %>%
+  filter(complete_pass == 1 |
+           incomplete_pass == 1 |
+           interception == 1, !is.na(down)) %>%
+  group_by(passer) %>%
+  summarize(total_completions = sum(complete_pass == 1,
+                                    na.rm = TRUE),
+            total_incompletions = sum(incomplete_pass == 1,
+                                      na.rm = TRUE)) %>%
+  filter(total_completions >= 180) %>%
+  mutate(difference = total_completions - total_incompletions)
+
+view(cmp_inc)
