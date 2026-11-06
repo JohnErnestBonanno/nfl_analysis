@@ -200,3 +200,36 @@ airyards_cpoe_mutate %>%
   filter(ay_distance == "Medium") %>%
   arrange(desc(avg_cpoe)) %>%
   slice_head(n = 10)
+
+#2.6 Core Skills for Tidy Data
+
+# Boom vs. Bust:
+#   * Boom%: correlates to any pass attempt by the quarterback that resulted in an expected points add (EPA) of at least 1
+#   * Bust%: any pass attempt that resulted in an EPA of at least -1 
+
+sis_data <- vroom("http://nfl-book.bradcongelio.com/sis-bb")
+
+sis_data <- sis_data %>%
+  janitor::clean_names() %>%
+  select(player, team, att, boom_percent, bust_percent) %>%
+  na.omit(sis_data)
+  #filter(!is.na(team))
+
+sis_data <- sis_data %>%
+  mutate(
+    boom_percent = readr::parse_number(boom_percent) / 100,
+    bust_percent = readr::parse_number(bust_percent) / 100
+  )
+
+sis_data <- sis_data %>%
+  filter(att >= 200) %>%
+  mutate(difference = boom_percent - bust_percent)
+
+view(sis_data)
+glimpse(sis_data)
+
+# Best Practice on data summary. Use both:
+#   * view() - scrollable spreadsheet
+#   * glimpse() - sample values w/ data_type
+
+
