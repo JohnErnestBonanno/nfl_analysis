@@ -233,3 +233,12 @@ glimpse(sis_data)
 #   * glimpse() - sample values w/ data_type
 
 
+sis_data <- sis_data %>%
+  mutate(team = case_when(
+    player == "Baker Mayfield" ~ "Rams",
+    TRUE ~ team))
+
+sis_data %>%
+  filter(player == "Baker Mayfield")
+
+#Merging Data Sets
