@@ -253,12 +253,40 @@ sis_data <- sis_data %>%
 
 glimpse(sis_data)
 
-#Exercises
+
+#Base Exercise
 
 pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG")
+
+view(pbp)
+
+#Exercise 1
+
+mahomes_int <- nflreadr::load_pbp(2022) %>%
   filter(season_type == "REG" & 
            interception == 1 & 
            passer_player_name == 'P.Mahomes') %>%
   summarize(air_yrd_avg = mean(air_yards))
 
-view(pbp)
+mahomes_int
+
+#Exercise 2
+
+# In a data frame titled wide_receivers, find the average yards after catch (yards_after_catch) and average yards after catch EPA (yac_epa) for the top-10 receivers in total receiving yards. In doing so, you will need to use group_by() on receiver.
+
+wr <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG" &
+           !is.na(yards_after_catch) &
+           !is.na(yac_epa)) %>%
+  group_by(receiver_player_name, receiver_player_id) %>%
+  summarize(
+    receiving_yards = sum(receiving_yards, na.rm = TRUE),
+    avg_yac = mean(yards_after_catch, na.rm = TRUE),
+    avg_yac_epa = mean(yac_epa, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(receiving_yards)) %>%
+  slice_head(n = 10)
+
+wr
