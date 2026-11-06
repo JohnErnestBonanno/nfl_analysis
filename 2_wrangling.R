@@ -173,3 +173,30 @@ team_aggressiveness <- pbp %>%
 
 team_aggressiveness %>%
   slice(1:10)
+
+#Mutate
+
+#completion percent over expected
+airyards_cpoe_mutate <- pbp %>%
+  filter(!is.na(cpoe)) %>%
+  mutate(
+    ay_distance = case_when(
+      air_yards < 0 ~ "Negative",
+      air_yards >= 0 & air_yards < 10 ~ "Short",
+      air_yards >= 10 & air_yards < 20 ~ "Medium",
+      air_yards >= 20 ~ "Deep")) %>%
+  group_by(passer, ay_distance) %>%
+  summarize(avg_cpoe = mean(cpoe))
+
+airyards_cpoe_mutate
+
+airyards_cpoe_mutate %>%
+  filter(ay_distance == "Medium") %>%
+  arrange(-avg_cpoe) %>%
+  slice(1:10)
+
+airyards_cpoe_mutate %>%
+  ungroup() %>%
+  filter(ay_distance == "Medium") %>%
+  arrange(desc(avg_cpoe)) %>%
+  slice_head(n = 10)
