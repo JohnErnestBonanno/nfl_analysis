@@ -45,3 +45,22 @@ afc_east <- pbp %>%
   filter(posteam %in% c("NE", "MIA", "NYJ", "BUF"))
 
 afc_east
+
+library(vroom)
+
+time_in_pocket <- vroom("http://nfl-book.bradcongelio.com/qb-tip")
+
+time_in_pocket
+
+fig = (
+  ggplot(data=time_in_pocket, aes(x=player, y=avg_time_to_throw))
+  + geom_col()
+)
+
+show(fig)
+
+
+time_in_pocket_no_afcn <- time_in_pocket %>%
+  filter(!team_name %in% c("PIT", "BAL", "CIN", "CLE"))
+
+time_in_pocket_no_afcn
