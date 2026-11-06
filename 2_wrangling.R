@@ -99,4 +99,42 @@ yrd_per_down = ggplot(total_yards_by_down,
   labs(title = "Yards Per Down: NFL 2022 Regular Season")
   
 yrd_per_down
+
+#Group_BY
+
+rushing_success_grouped <- pbp %>%
+  filter(play_type == "run" & play == 1 #Actually happens - no penality
+         & !is.na(down)
+         & season_type == "REG"
+         ) %>%
+  group_by(posteam) %>%
+  summarize(
+    success_rate = mean(success),
+    total_yards = sum(yards_gained)
+  ) %>% 
+  arrange(-success_rate)
+
+rushing_success_grouped %>%
+  slice(1:10)
+
+rushing_yrds <- ggplot(rushing_success_grouped,
+                       aes(x = reorder(posteam, -total_yards), y = total_yards)) +
+  geom_col() +
+  labs(title = "Rushing Yards Per Team: 2022 Reg Season",
+       x = "Team",
+       y = "Total Yards")
+
+rushing_yrds
   
+running_back_success_min <- pbp %>%
+  filter(play_type == "run" & play == 1 &
+           !is.na(down) &
+           !is.na(rusher)) %>%
+  group_by(rusher) %>%
+  summarize(success_rate = mean(success),
+            n_rushes = n()) %>%
+  filter(n_rushes >= 200) %>%
+  arrange(-success_rate)
+
+running_back_success_min %>%
+  slice(1:10)
