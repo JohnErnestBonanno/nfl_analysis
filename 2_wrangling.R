@@ -53,7 +53,7 @@ time_in_pocket <- vroom("http://nfl-book.bradcongelio.com/qb-tip")
 time_in_pocket
 
 fig = (
-  ggplot(data=time_in_pocket, aes(x=player, y=avg_time_to_throw))
+  ggplot(data=time_in_pocket, aes(x=team_name, y=avg_time_to_throw))
   + geom_col()
 )
 
