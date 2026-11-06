@@ -28,3 +28,15 @@ pbp <- nflreadr::load_pbp(2022) %>%
 
 
 pbp
+
+# 2.5 Working With NFL Data and the dplyr Verbs
+
+# 2.5.1 NFL Data and the filter() verb
+
+
+pbp <- nflreadr::load_pbp(2022)
+ne_offense <- pbp |> filter(posteam == "NE")
+
+ne_offense
+
+colnames(ne_offense)
