@@ -40,3 +40,8 @@ ne_offense <- pbp |> filter(posteam == "NE")
 ne_offense
 
 colnames(ne_offense)
+
+afc_east <- pbp %>%
+  filter(posteam %in% c("NE", "MIA", "NYJ", "BUF"))
+
+afc_east
