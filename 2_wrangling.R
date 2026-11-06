@@ -138,3 +138,17 @@ running_back_success_min <- pbp %>%
 
 running_back_success_min %>%
   slice(1:10)
+
+#Load Multiple Seasons
+
+seasons_2010_2022 <- nflreadr::load_pbp(2010:2022)
+
+yac_seasons <- seasons_2010_2022 %>%
+  filter(season_type == "REG" &
+           !is.na(posteam) &
+           !is.na(yards_after_catch)) %>%
+  group_by(season, posteam) %>%
+  summarize(total_yac = sum(yards_after_catch, na.rm = TRUE)) %>%
+  arrange(-total_yac)
+
+yac_seasons
