@@ -252,3 +252,13 @@ sis_data <- sis_data %>%
   left_join(teams, by = c("team" = "team_nick"))
 
 glimpse(sis_data)
+
+#Exercises
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG" & 
+           interception == 1 & 
+           passer_player_name == 'P.Mahomes') %>%
+  summarize(air_yrd_avg = mean(air_yards))
+
+view(pbp)
