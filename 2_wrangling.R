@@ -124,6 +124,11 @@ rushing_yrds <- ggplot(rushing_success_grouped,
        x = "Team",
        y = "Total Yards")
 
+
+# ggplot notes:
+#   * order x_axis via reorder(x_axis,y=what you want to order)
+#   * use labs for editting
+
 rushing_yrds
   
 running_back_success_min <- pbp %>%
