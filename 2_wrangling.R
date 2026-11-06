@@ -157,3 +157,19 @@ yac_seasons <- seasons_2010_2022 %>%
   arrange(-total_yac)
 
 yac_seasons
+
+#Summarize Verb
+
+team_aggressiveness <- pbp %>%
+  filter(play_type == "pass" &
+           down == 3 &
+           ydstogo <= 5 &
+           play == 1) %>%
+  group_by(posteam) %>%
+  summarize(total = n(),
+            aggressiveness = sum(air_yards >= ydstogo, na.rm = TRUE),
+            percentage = aggressiveness / total) %>%
+  arrange(-percentage)
+
+team_aggressiveness %>%
+  slice(1:10)
