@@ -290,3 +290,16 @@ wr <- nflreadr::load_pbp(2022) %>%
   slice_head(n = 10)
 
 wr
+
+#Exercise 3 - QB Hits
+
+# In a data frame titled qb_hits, find the total number of times each defensive unit (defteam) recorded a QB hit (qb_hit).
+
+qb_hits <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG" & qb_hit==1) %>%
+  group_by(defteam) %>%
+  summarize(total_qb_hits = sum(qb_hit), na.rm=TRUE) %>%
+  arrange(desc(total_qb_hits)) %>%
+  select(defteam, total_qb_hits)
+
+qb_hits
