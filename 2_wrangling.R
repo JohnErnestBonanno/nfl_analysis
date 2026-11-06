@@ -242,3 +242,13 @@ sis_data %>%
   filter(player == "Baker Mayfield")
 
 #Merging Data Sets
+
+teams <- nflreadr::load_teams(current = TRUE) %>%
+  select(team_abbr, team_nick, team_name, team_color, team_color2)
+
+glimpse(teams)
+
+sis_data <- sis_data %>%
+  left_join(teams, by = c("team" = "team_nick"))
+
+glimpse(sis_data)
